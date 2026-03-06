@@ -12,59 +12,47 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+    # Checkout repository
     - name: Checkout repository
       uses: actions/checkout@v3
 
 
-    # ----------------------
     # Setup Python
-    # ----------------------
-    - name: Set up Python
+    - name: Setup Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
 
 
-    # ----------------------
-    # Install Backend Dependencies
-    # ----------------------
-    - name: Install backend dependencies
-      working-directory: ./backend
+    # Install Python dependencies
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
 
-    # ----------------------
     # Run Django checks
-    # ----------------------
     - name: Run Django checks
-      working-directory: ./backend
       run: |
-        python manage.py check
+        python backend/manage.py check
 
 
-    # ----------------------
     # Setup Node.js
-    # ----------------------
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18'
 
 
-    # ----------------------
-    # Install Frontend Dependencies
-    # ----------------------
+    # Install frontend dependencies
     - name: Install frontend dependencies
       working-directory: ./frontend
       run: |
         npm install
 
 
-    # ----------------------
-    # Build React App
-    # ----------------------
+    # Build React frontend
     - name: Build frontend
       working-directory: ./frontend
       run: |
